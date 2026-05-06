@@ -5,21 +5,21 @@ export async function GET() {
   const GIST_URL = process.env.LIEN_GITS;
 
   try {
-    // const response = await fetch(GIST_URL, { next: { revalidate: 3600 } });
-    const response = await fetch(GIST_URL, { cache: 'no-store' });
+    const response = await fetch(GIST_URL, { next: { revalidate: 3600 } });
+    // const response = await fetch(GIST_URL, { cache: 'no-store' });
 
     const csvText = await response.text();
-    console.log(`cvs text : ${csvText} `)
+    // console.log(`cvs text : ${csvText} `)
     const parsed = Papa.parse(csvText, {
       header: true,
       delimiter: ';',
       skip_empty_lines: true,
     });
-    console.log(`cvs parsed : ${Object.keys(parsed).error} `)
+    // console.log(`cvs parsed : ${Object.keys(parsed).error} `)
 
     const gameData = {};
     parsed.data.forEach((row) => {
-      gameData[row['Nom']] = {
+      gameData[row['id']] = {
         Nom : row['Nom'],
         id: row['id'],
         Discipline: row['Discipline'],

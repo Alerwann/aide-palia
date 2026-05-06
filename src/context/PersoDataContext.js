@@ -28,8 +28,8 @@ export function PersoProvider({ children }) {
         }
 
         //si pas d'erreur on stock le json et supprime les erreurs eventuels
-          const data = await response.json();
-          console.log(data)
+        const data = await response.json();
+        console.log(data);
         setPersoData(data);
         setError(null);
       } catch (error) {
@@ -42,13 +42,23 @@ export function PersoProvider({ children }) {
     //appel réel de la fonction init
     initData();
   }, []);
-    console.log(`persoData length ${persoData?.length}`);
-  const getAllPerso = persoData ? Object.keys(persoData) : [];
 
+  // const getAllPersoName = persoData ? Object.keys(persoData) : [];
+  const getAllId = persoData ? Object.keys(persoData) : [];
+
+  console.log(`getallId : ${getAllId}`)
+  const getAllPersoName= persoData? Object.values(persoData).map((p)=>p.Nom): []
+  const getAllPersoObj = persoData?Object.values(persoData):[];
   const extractNames = (data) => data.map((p) => p.Nom);
 
+  const getOneById = (id) => {
+    const retunPerso = Object.entries(getAllPersoObj).find((perso) => perso.id == id)
+    return retunPerso;
+ }
+
+
   const getPersoStartWith = (firstLetter) => {
-    return getAllPerso.filter((nom) =>
+    return getAllPersoName.filter((nom) =>
       nom.toLowerCase().startsWith(firstLetter.toLowerCase())
     );
   };
@@ -59,15 +69,39 @@ export function PersoProvider({ children }) {
     return extractNames(objList);
   };
 
+  const findPersoByName = (name) => {
+    if (!persoData) return [];
+    console.log(`name ${name.toLowerCase()}`);
+    const findOne = Object.entries(persoData).filter(
+      (p) => p[0].toLowerCase() == name.toLowerCase()
+    );
+    console.log(findOne[0][1]);
+    // const findOne = Object.values(persoData).find((perso) => perso.name == name.toLowerCase());
+    // console.log(Object.values(persoData).find((personnage)=>personnage.nom==name))
+    // console.log(findOne !=null)
+    return findOne[0][1];
+  };
+
+  const findPersoById = (id) => {
+    if (!persoData) return [];
+    const objToReturn = Object.entries(persoData);
+    console.log(persoData);
+    return objToReturn;
+  };
   return (
     <PersoContext.Provider
       value={{
         persoData,
         isLoading,
         error,
-        getAllPerso,
+        getAllId,
+        getAllPersoName,
+        getAllPersoObj,
+        getOneById,
         getAllLoverPerso,
         getPersoStartWith,
+        findPersoByName,
+        findPersoById,
       }}
     >
       {children}
