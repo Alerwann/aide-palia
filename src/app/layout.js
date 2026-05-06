@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Tangerine } from "next/font/google";
 import "./globals.css";
 import HeaderCreate from "../component/header";
+import { PersoProvider } from "@/context/PersoDataContext";
 
 
 const geistSans = Geist({
@@ -26,8 +27,10 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <HeaderCreate />
-        {children}
+        <PersoProvider>
+          <HeaderCreate />
+          {children}
+        </PersoProvider>
       </body>
     </html>
   );
