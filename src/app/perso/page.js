@@ -14,7 +14,7 @@ export default function TestPage() {
   if (error)
     return <p style={{ color: 'red', padding: '20px' }}>Erreur : {error}</p>;
 
-  console.log(`console de perso page ${Object.values(persoData).map((p)=>p.Cadeaux)}`);
+
 
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
@@ -22,9 +22,9 @@ export default function TestPage() {
 
       <section>
         <h2>Tous les personnages ({getAllPersoName.length})</h2>
-        <ul>
+        <ul className="grid grid-cols-5 ">
           {Object.values(persoData).map((perso) => (
-            <li key={perso.Nom}>
+            <li key={perso.Nom} className='p-3 underline-offset-5 underline  '>
               <Link href={`/perso/${perso.id}`}>{perso.Nom}</Link>
             </li>
           ))}

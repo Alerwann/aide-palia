@@ -47,12 +47,19 @@ export function PersoProvider({ children }) {
   const getAllId = persoData ? Object.keys(persoData) : [];
 
   console.log(`getallId : ${getAllId}`)
-  const getAllPersoName= persoData? Object.values(persoData).map((p)=>p.Nom): []
-  const getAllPersoObj = persoData?Object.values(persoData):[];
+  const getAllPersoName = persoData ? Object.values(persoData).map((p) => p.Nom) : []
+  
+  
+  const getAllPersoObj = persoData ? Object.values(persoData) : [];
+  
+  
   const extractNames = (data) => data.map((p) => p.Nom);
 
   const getOneById = (id) => {
-    const retunPerso = Object.entries(getAllPersoObj).find((perso) => perso.id == id)
+    if (!persoData) return [];
+    const retunPerso = Object.values(getAllPersoObj).find((p) => p.id == id)
+    
+    // console.log(`return perso : ${retunPerso}`)
     return retunPerso;
  }
 
